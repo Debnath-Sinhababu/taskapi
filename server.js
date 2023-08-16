@@ -17,10 +17,10 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
  app.post('/addtofavourite', async(req, res) => {
-       console.log(req.body)
+      const {Title,Year,imdbID,Type,Poster}=req.body
     
-    const obj=await addtofavouriteModel.find({imdbid: req.body.imdbid});
-    
+    const obj=await addtofavouriteModel.find({imdbid: imdbID});
+        
      if(obj && Object.keys(obj).length>0){
         //  await addtofavouriteModel.findOneAndDelete({imdbid:id})
         return res.json({
@@ -30,7 +30,11 @@ app.get('/', (req, res) => {
      }
      else{
         const savetoadd=await addtofavouriteModel.create({
-           ...req.body
+          title:Title,
+          year:Year,
+          imdbid:imdbID,
+          type:Type,
+          image:Poster
            })
            return res.json({
             message:'added successfully',
@@ -38,7 +42,13 @@ app.get('/', (req, res) => {
         })
      }
  })
-
+  app.get('/alladded', async(req, res) => {
+    const obj=await addtofavouriteModel.find();
+    return res.json({
+      success:true,
+      all:obj
+    });
+  })
 
 app.listen(4000,()=>{
     console.log('Server is running on port 5000');

@@ -11,12 +11,16 @@ const Addfav = new mongoose.Schema({
         required: true,
      },
      year:{
-        type: Number,
+        type: String,
         required: true,
      },
      imdbid:{
         type: String,
         required: true,
+     },
+     image:{
+      type: String,
+      required: true,
      },
     createdAt: {
       type: Date,
